@@ -5,7 +5,7 @@ export default async (request, context) => {
   const url = new URL(request.url);
   const secret = url.searchParams.get("kunci_rahasia");
   
-  if (secret !== "RAHASIA_DAPUR") return new Response("Akses Ditolak", { status: 403 });
+  if (secret !== "SATSET_CUAN") return new Response("Akses Ditolak", { status: 403 });
   if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });
 
   const firebaseConfig = {
