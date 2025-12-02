@@ -199,4 +199,100 @@
         }
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
- 
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- ISI API KEY DI BAWAH INI (WAJIB) ---
+        const firebaseConfig = {
+            apiKey: "ISI_API_KEY_ANDA_DISINI", 
+            projectId: "ISI_PROJECT_ID_ANDA_DISINI" 
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function startSecurityCheck(code, myToken) {
+            onSnapshot(doc(db, "licenses", code), (doc) => {
+                const data = doc.data();
+                if(!data) return;
+                const validTokens = data.valid_tokens || [];
+                if (!validTokens.includes(myToken)) {
+                    alert("SESI BERAKHIR!\n\nBatas perangkat tercapai. Akun ini digunakan di perangkat lain.");
+                    sessionStorage.clear();
+                    location.reload();
+                }
+            });
+        }
+
+        // Cek Login saat Refresh
+        if(sessionStorage.getItem('auth') === 'true'){
+            const savedCode = sessionStorage.getItem('my_code');
+            const savedToken = sessionStorage.getItem('my_token');
+            if(savedCode && savedToken) {
+                loginOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                setTimeout(() => {
+                    addMsg("Halo! Saya <b>Aimin</b>. Ada yang bisa dibantu?", 'bot');
+                    showOpts();
+                }, 800);
+                startSecurityCheck(savedCode, savedToken);
+            }
+        }
+
+        // Chatbot Logic
+        const chatArea = document.getElementById('chatArea');
+        const chatActs = document.getElementById('chatActions');
+        
+        function addMsg(txt, sender){
+            chatArea.innerHTML += `<div class="chat-bubble ${sender === 'bot' ? 'chat-bot' : 'chat-user'}">${txt}</div>`;
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        function showOpts(){
+            chatActs.innerHTML = '';
+            [{t:"Jelaskan Fitur", a:"ex"}, {t:"Hubungi Admin", a:"wa"}, {t:"Lihat Katalog", a:"sc"}].forEach(o => {
+                chatActs.innerHTML += `<button class="action-btn" onclick="act('${o.a}')">${o.t}</button>`;
+            });
+        }
+        
+        window.act = (type) => {
+            chatActs.innerHTML = '';
+            if(type === 'ex') addMsg("Kami punya divisi Analis, Planner, Komunikasi & Editing.", 'bot');
+            if(type === 'wa') window.open("https://wa.me/6285387745554");
+            if(type === 'sc') document.getElementById('catalog-container').scrollIntoView({behavior:'smooth'});
+            setTimeout(showOpts, 2000);
+        }
+        
+        document.getElementById('sendBtn').onclick = () => {
+            const v = document.getElementById('userInput').value;
+            if(v) {
+                addMsg(v, 'user');
+                document.getElementById('userInput').value = '';
+                setTimeout(() => addMsg("Silakan pilih menu di bawah atau hubungi admin.", 'bot'), 1000);
+            }
+        }
+
+        // Theme Logic
+        const tBtn = document.getElementById('themeBtn');
+        const updateTheme = () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            document.getElementById('iconSun').style.display = isLight ? 'block' : 'none';
+            document.getElementById('iconMoon').style.display = isLight ? 'none' : 'block';
+        }
+        
+        if(localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        updateTheme();
+        
+        tBtn.onclick = () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            if(isLight) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+            updateTheme();
+        }
+    </script>
+</body>
+</html>
