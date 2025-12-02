@@ -201,10 +201,9 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // --- ISI API KEY DI BAWAH INI (WAJIB) ---
         const firebaseConfig = {
-            apiKey: "ISI_API_KEY_ANDA_DISINI", 
-            projectId: "ISI_PROJECT_ID_ANDA_DISINI" 
+            apiKey: "AIzaSyDQPtaSrKK1yf7lZ-nA_uqckWM6jIXzdTk", 
+            projectId: "aisatset" 
         };
 
         const app = initializeApp(firebaseConfig);
@@ -223,7 +222,6 @@
             });
         }
 
-        // Cek Login saat Refresh
         if(sessionStorage.getItem('auth') === 'true'){
             const savedCode = sessionStorage.getItem('my_code');
             const savedToken = sessionStorage.getItem('my_token');
@@ -238,7 +236,6 @@
             }
         }
 
-        // Chatbot Logic
         const chatArea = document.getElementById('chatArea');
         const chatActs = document.getElementById('chatActions');
         
@@ -271,7 +268,6 @@
             }
         }
 
-        // Theme Logic
         const tBtn = document.getElementById('themeBtn');
         const updateTheme = () => {
             const isLight = document.documentElement.getAttribute('data-theme') === 'light';
