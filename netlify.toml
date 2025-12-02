@@ -1,0 +1,11 @@
+[[edge_functions]]
+  function = "login"
+  path = "/api/login"
+
+[[edge_functions]]
+  function = "webhook"
+  path = "/api/webhook"
+
+[[edge_functions]]
+  function = "claim"
+  path = "/api/claim"
