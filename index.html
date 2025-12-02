@@ -33,14 +33,51 @@
         .orb-1 { width: 600px; height: 600px; background: #0f2fd8; top: -20%; left: -10%; }
         .orb-2 { width: 500px; height: 500px; background: #38bdf8; bottom: -20%; right: -10%; }
         @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, 30px); } }
-        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.5s; }
-        .login-card { background: var(--card-color); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 24px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .password-input { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); padding: 14px; border-radius: 12px; font-size: 1rem; text-align: center; margin-bottom: 20px; outline: none; }
-        .btn-login { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
-        .login-error { color: #ef4444; font-size: 0.85rem; margin-top: 15px; display: none; }
+        
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(5, 10, 48, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.5s; }
+        
+        .login-card { 
+            background: rgba(15, 29, 66, 0.6); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(56, 189, 248, 0.3); 
+            padding: 45px 35px; 
+            border-radius: 30px; 
+            width: 100%; max-width: 400px; text-align: center; 
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.15), inset 0 0 20px rgba(56, 189, 248, 0.05);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .input-group { position: relative; width: 100%; margin-bottom: 25px; }
+        .input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--text-muted); transition: color 0.3s; pointer-events: none; }
+        
+        .password-input { 
+            width: 100%; background: rgba(0, 0, 0, 0.2); 
+            border: 2px solid var(--border-color); 
+            color: var(--text-main); padding: 16px 16px 16px 50px; 
+            border-radius: 16px; font-size: 1.1rem; 
+            outline: none; transition: all 0.3s ease; 
+            font-weight: 500; letter-spacing: 1px;
+        }
+        .password-input:focus { border-color: var(--highlight); background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        .password-input:focus + .input-icon { color: var(--highlight); }
+        
+        .btn-login { 
+            width: 100%; padding: 16px; 
+            background: linear-gradient(135deg, #38bdf8, #2563eb); 
+            color: white; border: none; border-radius: 16px; 
+            font-weight: 700; font-size: 1rem; cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4); 
+            transition: all 0.3s ease; letter-spacing: 0.5px;
+        }
+        .btn-login:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5); }
+        .btn-login:active { transform: scale(0.98); }
+        .btn-login:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .login-error { color: #ff4d4d; font-size: 0.9rem; margin-top: 15px; display: none; background: rgba(255, 0, 0, 0.1); padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 0, 0, 0.3); }
+
         .main-wrapper { width: 100%; max-width: 1000px; padding: 40px 20px; display: none; flex: 1; }
         .header { text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
-        .logo-container-header { width: 70px; height: 70px; background: var(--logo-bg); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .logo-container-header { width: 80px; height: 80px; background: var(--logo-bg); border-radius: 22px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .logo-svg { width: 100%; height: 100%; transform: scale(1.5); }
         .aimin-container { background: var(--chat-bg); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 24px; padding: 24px; margin-bottom: 50px; }
         .chat-area { display: flex; flex-direction: column; gap: 12px; max-height: 350px; min-height: 200px; overflow-y: auto; margin-bottom: 15px; }
@@ -69,18 +106,23 @@
 </head>
 <body>
     <div id="login-overlay">
-        <div class="bg-orb orb-1" style="width: 250px; height: 250px; opacity: 0.4;"></div>
+        <div class="bg-orb orb-1" style="width: 300px; height: 300px; opacity: 0.5;"></div>
         <div class="login-card">
-            <div class="logo-container-header" style="margin: 0 auto 20px auto; width: 60px; height: 60px;">
+            <div class="logo-container-header" style="margin: 0 auto 25px auto; width: 75px; height: 75px;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" class="logo-svg">
                     <path fill="#f7fa1a" d="M 530.5,241.5 C 553.637,238.99 571.47,247.324 584,266.5C 597.929,295.935 612.096,325.268 626.5,354.5C 570.609,414.554 514.942,474.721 459.5,535C 459.905,535.945 460.572,536.612 461.5,537C 480.547,541.512 499.547,546.178 518.5,551C 520.286,551.196 521.619,552.029 522.5,553.5C 489.667,613.476 455.833,672.81 421,731.5C 425.794,711.089 430.628,690.589 435.5,670C 433.919,652.824 425.585,640.157 410.5,632C 364.86,610.513 319.527,588.513 274.5,566C 259.169,551.669 253.669,534.169 258,513.5C 261.449,501.439 268.616,492.273 279.5,486C 322.136,465.349 364.802,444.683 407.5,424C 417.623,417.544 426.123,409.377 433,399.5C 454.744,354.346 476.744,309.346 499,264.5C 506.987,253.269 517.487,245.603 530.5,241.5 Z" />
                     <path fill="#f7fa19" d="M 612.5,517.5 C 610.485,516.076 608.152,515.41 605.5,515.5C 591.538,513.176 577.871,509.843 564.5,505.5C 596.611,445.948 629.778,386.948 664,328.5C 659.517,347.961 655.017,367.461 650.5,387C 651.774,403.551 659.441,416.218 673.5,425C 718.566,446.202 763.233,467.868 807.5,490C 827.579,509.406 831.079,531.573 818,556.5C 814.167,561.667 809.667,566.167 804.5,570C 763.073,590.713 721.74,611.38 680.5,632C 668.086,639.746 657.586,649.579 649,661.5C 626.054,709.06 602.387,756.06 578,802.5C 556.829,822.487 533.996,824.654 509.5,809C 505.631,805.466 502.131,801.633 499,797.5C 484.124,768.246 469.624,738.746 455.5,709C 512.602,646.061 570.269,583.561 628.5,521.5C 623.188,520.038 617.855,518.705 612.5,517.5 Z" />
                 </svg>
             </div>
-            <h2 class="login-title">Akses Terbatas AI Satset</h2>
-            <p class="login-desc">Masukkan kode akses untuk menggunakan</p>
-            <input type="text" id="accessCodeInput" class="password-input" placeholder="Kode Akses">
-            <button id="loginBtn" class="btn-login" onclick="handleLogin()">Masuk</button>
+            <h2 style="font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 8px;">Selamat Datang</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 30px;">Masukkan kode akses untuk melanjutkan</p>
+            
+            <div class="input-group">
+                <input type="text" id="accessCodeInput" class="password-input" placeholder="Kode Akses">
+                <span class="input-icon">🔒</span>
+            </div>
+            
+            <button id="loginBtn" class="btn-login" onclick="handleLogin()">MASUK SEKARANG</button>
             <p id="loginError" class="login-error"></p>
         </div>
     </div>
@@ -122,7 +164,7 @@
     </div>
     <div class="site-footer">&copy; 2025 TIM AI Konten @ai.satset.</div>
 
-    <script>
+    <script type="module">
         const loginOverlay = document.getElementById('login-overlay');
         const mainContent = document.getElementById('mainContent');
         const toolsData=[{title:"DIVISI ANALIS",icon:"🔍",tools:[{name:"Product Value Analyst",desc:"Analisis mendalam terhadap info detail produk.",link:"https://gemini.google.com/share/807abd291a8a",icon:"📈"},{name:"Market Mapper",desc:"Intelijen Mapping Market untuk memetakan landscape pasar Anda.",link:"https://gemini.google.com/share/85d1aaa7646c",icon:"🗺️"},{name:"Psikologis Market",desc:"Detektif Audience Profiler: membaca pikiran & kebiasaan target market.",link:"https://gemini.google.com/share/1d2b52527cbe",icon:"🧠"}]},{title:"DIVISI KONTEN PLANNER",icon:"📅",tools:[{name:"Perencana Konten",desc:"Membuat rencana konten media sosial lengkap (ide, format, dan CTA) dari topik Anda.",link:"https://gemini.google.com/share/015ab1a78ecc",icon:"📝"}]},{title:"DIVISI STRATEGI KOMUNIKASI",icon:"📣",tools:[{name:"Copywriting",desc:"Buat naskah iklan, caption, atau skrip video yang menjual dalam hitungan detik.",link:"https://gemini.google.com/share/6469a0180f12",icon:"✍️"},{name:"Teks ke Suara",desc:"Ubah teks atau naskah kamu menjadi audio (voice over) yang alami.",link:"https://gemini.google.com/share/3508bee52723",icon:"🎙️"}]},{title:"DIVISI EDITING",icon:"🎨",tools:[{name:"Gabung Gambar",desc:"Unggah 2-5 gambar, beri instruksi, dan biarkan AI menggabungkannya.",link:"https://gemini.google.com/share/72fae79337fe",icon:"🧩"},{name:"Foto Model",desc:"Satset bikin Model AI Custom atau Ubah Pose Kamu.",link:"https://gemini.google.com/share/72dab91db5f6",icon:"📸"},{name:"Foto Produk",desc:"Satset bikin foto ngasal, jadi foto mahal.",link:"https://gemini.google.com/share/bd4f158ed174",icon:"📦"},{name:"Foto Fashion",desc:"Masukkan foto fashion kamu, ubah menjadi menarik dalam hitungan detik.",link:"https://gemini.google.com/share/b59aa1071162",icon:"👗"},{name:"Edit Foto",desc:"Satset Edit dan Perbaiki Foto Kamu.",link:"https://gemini.google.com/share/be8894819e0f",icon:"✨"},{name:"Poster Iklan",desc:"Buat poster iklan 3D hyper-realistic untuk produk kamu.",link:"https://gemini.google.com/share/a0b75ddc2044",icon:"🖼️"}]}];
@@ -132,7 +174,7 @@
             mainContainer.innerHTML+=`<div class="tool-category-header"><span class="emoji-icon">${s.icon}</span><span>${s.title}</span></div><div class="tools-grid">${s.tools.map(t=>`<div class="ai-tool-card"><div class="tool-content-top"><div class="tool-icon-wrapper"><span class="emoji-icon">${t.icon}</span></div><div class="flex-1"><h3 class="tool-name">${t.name}</h3><p class="tool-desc">${t.desc}</p></div></div><a href="${t.link}" target="_blank" class="btn-access">Akses Alat</a></div>`).join('')}</div>`;
         });
 
-        async function handleLogin(){
+        window.handleLogin = async function() {
             const code=document.getElementById('accessCodeInput').value.trim();
             const btn=document.getElementById('loginBtn');
             const err=document.getElementById('loginError');
@@ -157,43 +199,4 @@
         }
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "ISI_API_KEY_ANDA_DISINI", 
-            projectId: "ISI_PROJECT_ID_ANDA" 
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        function startSecurityCheck(code, myToken) {
-            onSnapshot(doc(db, "licenses", code), (doc) => {
-                const data = doc.data();
-                if(!data) return;
-                const validTokens = data.valid_tokens || [];
-                if (!validTokens.includes(myToken)) {
-                    alert("SESI BERAKHIR!\n\nBatas perangkat tercapai. Akun ini digunakan di perangkat lain.");
-                    sessionStorage.clear();
-                    location.reload();
-                }
-            });
-        }
-
-        if(sessionStorage.getItem('auth')==='true'){
-            const savedCode = sessionStorage.getItem('my_code');
-            const savedToken = sessionStorage.getItem('my_token');
-            if(savedCode && savedToken) {
-                loginOverlay.style.display='none';mainContent.style.display='block';
-                setTimeout(()=>{addMsg("Halo! Saya <b>Aimin</b>. Ada yang bisa dibantu?",'bot');showOpts();},800);
-                startSecurityCheck(savedCode, savedToken);
-            }
-        }
-
-        const chatArea=document.getElementById('chatArea');
-        const chatActs=document.getElementById('chatActions');
-        function addMsg(txt,sender){
-            chatArea.innerHTML+=`<div class="chat-bubble ${sender==='bot'?'chat-bot':'chat-user'}">${txt}</div>`;
-            chatArea.scrollTop=chatArea.scrollHeight;
-        }
-        function showOp
+ 
