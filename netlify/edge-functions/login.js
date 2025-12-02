@@ -24,21 +24,20 @@ export default async (request, context) => {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      return new Response(JSON.stringify({ success: false, message: "Kode Akses Tidak Ditemukan!" }), { 
+      return new Response(JSON.stringify({ success: false, message: "Kode Akses Salah!" }), { 
         headers: { "Content-Type": "application/json" }, status: 404 
       });
     }
 
     const data = docSnap.data();
     
-    // --- LOGIKA MULTI-USER / TEAM ---
-    const maxDevices = data.max_devices || 1; 
+    // Logika Batas Device (Default 3)
+    const maxDevices = data.max_devices || 3; 
     let currentTokens = data.valid_tokens || [];
     const newSessionToken = crypto.randomUUID();
 
     currentTokens.push(newSessionToken);
 
-    // Hapus token terlama jika melebihi batas (Saling Tendang)
     if (currentTokens.length > maxDevices) {
         currentTokens = currentTokens.slice(-maxDevices);
     }
