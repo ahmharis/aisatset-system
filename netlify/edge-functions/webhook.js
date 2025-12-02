@@ -5,9 +5,7 @@ export default async (request, context) => {
   const url = new URL(request.url);
   const secret = url.searchParams.get("kunci_rahasia");
   
-  // GANTI 'RAHASIA_DAPUR' DENGAN PASSWORD ANDA SENDIRI
   if (secret !== "RAHASIA_DAPUR") return new Response("Akses Ditolak", { status: 403 });
-  
   if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });
 
   const firebaseConfig = {
@@ -23,17 +21,30 @@ export default async (request, context) => {
     const body = await request.json();
     const email = body.email;
     
-    // UPDATE DI SINI: Default Max Devices jadi 3
+    // Default 3 Device (Bisa diubah dari Zapier jika produk Enterprise)
     const maxDevices = body.max_devices || 3; 
 
     if (!email) return new Response("Email wajib ada", { status: 400 });
 
-    // Generate Kode: TIMAI-NAMADEPAN-ACAK
-    const emailPrefix = email.split('@')[0].toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 5);
-    const randomStr = Math.random().toString(36).substring(2, 6).toUpperCase();
-    const newCode = `TIMAI-${emailPrefix}-${randomStr}`;
+    // --- LOGIKA GENERATOR NAMA OTOMATIS ---
+    
+    // 1. Ambil nama dari email (sebelum @), buang angka/simbol, huruf besar semua
+    let cleanName = email.split('@')[0].replace(/[^a-zA-Z]/g, '').toUpperCase();
+    
+    // 2. Jika nama terlalu pendek (<3 huruf), tambah variasi
+    if (cleanName.length < 3) cleanName = "MEMBER";
+    
+    // 3. Batasi maksimal 10 huruf agar kode tidak kepanjangan
+    cleanName = cleanName.substring(0, 10);
 
-    // Simpan Lisensi
+    // 4. Tambah 4 digit angka acak (1000-9999) agar unik
+    const randomDigits = Math.floor(1000 + Math.random() * 9000);
+
+    // 5. Format Akhir: SATSET-NAMA-ANGKA (Contoh: SATSET-BUDI-8821)
+    const newCode = `SATSET-${cleanName}-${randomDigits}`;
+
+    // --- SIMPAN KE DATABASE ---
+
     await setDoc(doc(db, "licenses", newCode), {
       owner_email: email,
       max_devices: parseInt(maxDevices),
@@ -42,7 +53,6 @@ export default async (request, context) => {
       valid_tokens: []
     });
 
-    // Simpan Klaim
     await setDoc(doc(db, "claims", email), { license_code: newCode });
 
     return new Response(JSON.stringify({ success: true, code: newCode }), {
