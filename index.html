@@ -81,41 +81,18 @@
         .btn-access { align-self: flex-end; padding: 8px 16px; font-size: 0.85rem; background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end)); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; white-space: nowrap; transition: all 0.2s; }
         .btn-access:hover { opacity: 0.9; transform: translateY(-1px); }
         .site-footer { margin-top: auto; padding: 20px; color: var(--text-muted); font-size: 0.85rem; text-align: center; }
-        #login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-        }
-        .login-card {
-            background: var(--card-color); border: 1px solid var(--border-color); padding: 40px 30px;
-            border-radius: 24px; width: 100%; max-width: 380px; text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); backdrop-filter: blur(10px);
-            animation: slideUp 0.5s ease-out;
-        }
+        #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
+        .login-card { background: var(--card-color); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 24px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); backdrop-filter: blur(10px); animation: slideUp 0.5s ease-out; }
         .login-title { font-size: 1.75rem; font-weight: 700; color: var(--text-main); margin: 0 0 10px 0; }
         .login-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; line-height: 1.5; }
         .login-error { color: #ef4444; font-size: 0.85rem; margin-top: 15px; display: none; font-weight: 500; }
         .password-wrapper { position: relative; width: 100%; display: flex; align-items: center; }
-        .password-input {
-            width: 100%; background: var(--input-bg); border: 1px solid var(--input-border);
-            color: var(--text-main); padding: 14px 45px; border-radius: 12px;
-            font-size: 1rem; text-align: center; outline: none; letter-spacing: 2px; transition: border-color 0.3s;
-        }
+        .password-input { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); padding: 14px 45px; border-radius: 12px; font-size: 1rem; text-align: center; outline: none; letter-spacing: 2px; transition: border-color 0.3s; }
         .password-input:focus { border-color: var(--highlight); }
         .password-input::placeholder { letter-spacing: normal; font-size: 0.9rem; }
-        .toggle-password {
-            position: absolute; right: 10px; background: none; border: none; cursor: pointer;
-            color: var(--text-muted); padding: 8px; display: flex; align-items: center; justify-content: center;
-            transition: color 0.3s; z-index: 10;
-        }
+        .toggle-password { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 8px; display: flex; align-items: center; justify-content: center; transition: color 0.3s; z-index: 10; }
         .toggle-password:hover { color: var(--highlight); }
-        .btn-login {
-            width: 100%; padding: 14px; margin-top: 20px; font-size: 1rem;
-            background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
-            color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
+        .btn-login { width: 100%; padding: 14px; margin-top: 20px; font-size: 1rem; background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .btn-login:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5); }
         .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (max-width: 768px) { .tools-grid { grid-template-columns: 1fr; } }
@@ -142,6 +119,7 @@
     </style>
 </head>
 <body>
+
     <div id="login-overlay">
         <div class="bg-orb orb-1" style="width: 250px; height: 250px; opacity: 0.4;"></div>
         <div class="login-card">
@@ -218,7 +196,6 @@
         const togglePasswordBtn = document.getElementById('togglePasswordBtn');
         const eyeIcon = document.getElementById('eyeIcon');
         const eyeOffIcon = document.getElementById('eyeOffIcon');
-
         const toolsData=[{title:"DIVISI ANALIS",icon:"🔍",tools:[{name:"Product Value Analyst",desc:"Analisis mendalam terhadap info detail produk.",link:"https://gemini.google.com/share/807abd291a8a",icon:"📈"},{name:"Market Mapper",desc:"Intelijen Mapping Market untuk memetakan landscape pasar Anda.",link:"https://gemini.google.com/share/85d1aaa7646c",icon:"🗺️"},{name:"Psikologis Market",desc:"Detektif Audience Profiler: membaca pikiran & kebiasaan target market.",link:"https://gemini.google.com/share/1d2b52527cbe",icon:"🧠"}]},{title:"DIVISI KONTEN PLANNER",icon:"📅",tools:[{name:"Perencana Konten",desc:"Membuat rencana konten media sosial lengkap (ide, format, dan CTA) dari topik Anda.",link:"https://gemini.google.com/share/015ab1a78ecc",icon:"📝"}]},{title:"DIVISI STRATEGI KOMUNIKASI",icon:"📣",tools:[{name:"Copywriting",desc:"Buat naskah iklan, caption, atau skrip video yang menjual dalam hitungan detik.",link:"https://gemini.google.com/share/6469a0180f12",icon:"✍️"},{name:"Teks ke Suara",desc:"Ubah teks atau naskah kamu menjadi audio (voice over) yang alami.",link:"https://gemini.google.com/share/3508bee52723",icon:"🎙️"}]},{title:"DIVISI EDITING",icon:"🎨",tools:[{name:"Gabung Gambar",desc:"Unggah 2-5 gambar, beri instruksi, dan biarkan AI menggabungkannya.",link:"https://gemini.google.com/share/72fae79337fe",icon:"🧩"},{name:"Foto Model",desc:"Satset bikin Model AI Custom atau Ubah Pose Kamu.",link:"https://gemini.google.com/share/72dab91db5f6",icon:"📸"},{name:"Foto Produk",desc:"Satset bikin foto ngasal, jadi foto mahal.",link:"https://gemini.google.com/share/bd4f158ed174",icon:"📦"},{name:"Foto Fashion",desc:"Masukkan foto fashion kamu, ubah menjadi menarik dalam hitungan detik.",link:"https://gemini.google.com/share/b59aa1071162",icon:"👗"},{name:"Edit Foto",desc:"Satset Edit dan Perbaiki Foto Kamu.",link:"https://gemini.google.com/share/be8894819e0f",icon:"✨"},{name:"Poster Iklan",desc:"Buat poster iklan 3D hyper-realistic untuk produk kamu.",link:"https://gemini.google.com/share/a0b75ddc2044",icon:"🖼️"}]}];
 
         const mainContainer = document.getElementById('catalog-container');
@@ -253,23 +230,30 @@
 
         async function processUserText(text) {
             showTyping();
-            const delay = Math.floor(Math.random() * 1000) + 1000;
+            const delay = Math.floor(Math.random() * 500) + 500;
             setTimeout(async () => {
                 try {
-                    const res = await fetch('/api/chat', {
+                    // Coba panggil Backend (Mode AI)
+                    const res = await fetch('/.netlify/functions/chat', { 
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message: text })
                     });
-                    if (!res.ok) throw new Error("API Error");
+                    
+                    // Cek status, jika bukan 200 (OK), langsung pakai fallback
+                    if (!res.ok) throw new Error("API Error"); 
+                    
                     const data = await res.json();
                     hideTyping();
-                    addMsg(data.reply, 'bot');
+                    addMsg(data.reply, 'bot'); // Output AI response
                     setTimeout(showOpts, 800);
+
                 } catch (e) {
+                    // JIKA GAGAL (Mode Manual/Fallback)
                     hideTyping();
                     const lower = text.toLowerCase();
                     const found = fallbackKnowledge.find(k => k.keywords.some(kw => lower.includes(kw)));
+                    
                     if(found) {
                         addMsg(found.responses[0], 'bot');
                         if(found.action === 'wa') setTimeout(() => act('wa'), 500);
@@ -334,7 +318,7 @@
             if(!code) return;
             loginBtn.innerText = "Memproses..."; loginBtn.disabled = true; err.style.display = 'none';
             try {
-                const res = await fetch('/api/login', {
+                const res = await fetch('/.netlify/functions/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code })
@@ -349,14 +333,9 @@
                         loginOverlay.style.display = 'none';
                         mainContent.style.display = 'block';
                     }, 500);
-                    // AIMIN SAPAAN: Menggunakan hybrid logic setelah login sukses
                     setTimeout(() => {
-                        const initialGreeting = "Halo! Saya <b>Aimin</b>, Manager Tim AI Konten kamu. 👋";
-                        addMsg(initialGreeting, 'bot');
-                        setTimeout(() => { 
-                            addMsg("Ada yang bisa saya bantu hari ini?", 'bot'); 
-                            showOpts(); 
-                        }, 800);
+                        addMsg("Halo! Saya <b>Aimin</b>, Manager Tim AI Konten kamu. 👋", 'bot');
+                        setTimeout(() => { addMsg("Ada yang bisa saya bantu hari ini?", 'bot'); showOpts(); }, 800);
                     }, 800);
                     startSecurityCheck(code, data.token);
                 } else {
