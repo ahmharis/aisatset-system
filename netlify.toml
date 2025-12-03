@@ -1,15 +1,23 @@
-[[edge_functions]]
-  function = "login"
-  path = "/api/login"
+[build]
+  # Menentukan folder functions
+  functions = "netlify/functions"
+  
+[[redirects]]
+  from = "/api/login"
+  to = "/.netlify/functions/login"
+  status = 200
 
-[[edge_functions]]
-  function = "webhook"
-  path = "/api/webhook"
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
 
-[[edge_functions]]
-  function = "claim"
-  path = "/api/claim"
+[[redirects]]
+  from = "/api/webhook"
+  to = "/.netlify/functions/webhook"
+  status = 200
 
-[[edge_functions]]
-  function = "chat"
-  path = "/api/chat"
+[[redirects]]
+  from = "/api/claim"
+  to = "/.netlify/functions/claim"
+  status = 200
